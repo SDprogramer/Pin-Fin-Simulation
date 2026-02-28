@@ -1,0 +1,19 @@
+Future Developments
+1. Spatial Expansion and Coordinate Integration
+To achieve a comprehensive 3D thermal profile, future work will focus on integrating vertical spatial coordinates as primary input features. This will allow the model to interpolate temperature data across the entire volume of the fin, rather than being restricted to specific 2D planes.
+
+2. Implementation of Robust Regressors
+While initial models have shown promise, further exploration into high-performance algorithms like XGBoost and Support Vector Regression (SVR) is planned. These models will be rigorously validated against experimental data to ensure physical consistency and better handling of non-linear thermal gradients.
+
+3. Optimization for Computational Efficiency
+A primary goal is to reduce the "computational overhead" associated with high-fidelity CFD. Future iterations will aim to develop a streamlined, lightweight ML architecture that maintains high predictive accuracy while significantly lowering the time and hardware resources required for 3D thermal reconstruction.
+
+4. Quantifying Spatial Error Propagation
+Data suggests that prediction error correlates with the distance from the mid-plane. We intend to establish a relative error metric—a "thermal fidelity index"—to quantify how accuracy decays spatially. This will provide a clear boundary for the model's reliable operating envelope.
+
+Key Improvements Made:
+Terminology: Swapped "monetary cost" for "computational overhead" and "physically testing" for "rigorous validation."
+
+Clarity: Instead of saying "it's better to measure it in some terms," I used "quantify how accuracy decays spatially."
+
+Structure: Used formal subheadings to make the section "scannable" for reviewers.
