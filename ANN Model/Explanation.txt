@@ -1,79 +1,74 @@
 Overview
-The notebook is designed to load, process, and visualize temperature distribution data for a mechanical component (likely related to your "Fins Heat Prediction" project). It handles two distinct types of data:
+The notebook is designed to load, process, and visualize temperature distribution data for a mechanical component
+(likely related to your "Fins Heat Prediction" project). It handles two distinct types of data:
+
 
 2D Data: Varies by "Boundary Temperature" (B.T.).
-
 3D Data: Varies by Z-plane height (depth).
+The workflow aggregates dispersed CSV files into consolidated datasets and then compares "Actual" vs. "Predicted" temperatures
+using contour plots.
 
-The workflow aggregates dispersed CSV files into consolidated datasets and then compares "Actual" vs. "Predicted" temperatures using contour plots.
 
 Step-by-Step Explanation
+
+
 Step 1: Environment Setup (Cells 1 & 2)
 You started by importing the necessary libraries for data analysis and machine learning:
-
 Data Handling: pandas (for dataframes) and numpy (for numerical operations).
-
 Visualization: matplotlib.pyplot (for plotting graphs).
-
-Machine Learning / AI: sklearn, tensorflow, and keras (indicating this notebook likely interfaces with or analyzes the output of your Hybrid CFD-ML model).
-
+Machine Learning / AI: sklearn, tensorflow, and keras (indicating this notebook likely interfaces with or
+analyzes the output of your Hybrid CFD-ML model).
 System: os (to navigate your folder structure).
+
 
 Step 2: Defining Data Sources (Cells 3 & 4)
 You defined the file paths where your data is stored:
-
 2D Data Path: Points to .../ANN Model/2D Data and specifically targets the folder B.T. 340.
+3D Data Path: Points to .../ANN Model/3D Visualize Data and targets specific Z-planes: 0 mm, 100 mm, 175 mm, 275 mm, 375 mm,
+and 475 mm.
 
-3D Data Path: Points to .../ANN Model/3D Visualize Data and targets specific Z-planes: 0 mm, 100 mm, 175 mm, 275 mm, 375 mm, and 475 mm.
 
 Step 3: Aggregating 2D Data (Cells 5 & 6)
 This block creates your main 2D dataset:
-
 Loop: You iterate through the folders defined in bt_folders_visualize_2d.
-
 File Reading: Inside each folder, you look for files ending in temp.csv.
 
 Processing:
 
 You read the CSV into a DataFrame.
-
 Renaming: You rename the columns to ['x', 'y', 'z', 'Temperature'] to ensure consistency.
-
-Feature Engineering: You create a new column BT (Boundary Temperature) by extracting the number from the folder name (e.g., splitting B.T. 340 to get 340).
-
+Feature Engineering: You create a new column BT (Boundary Temperature) by extracting the number from the folder name
+(e.g., splitting B.T. 340 to get 340).
 Merging: All individual DataFrames are appended to a list and combined (pd.concat) into one master DataFrame df_visualize_2d.
+
 
 Step 4: Aggregating 3D Data (Cells 7 & 8)
 This block performs a similar operation for your 3D data:
-
 Loop: You iterate through the Z-plane folders (e.g., Z = + 100 mm).
-
 File Reading: You read the temp.csv files found in these folders.
 
 Processing:
 
 Renaming: Columns are renamed to ['x', 'y', 'z', 'Temperature'].
-
-Feature Engineering: You create a new column Z by extracting the height value from the folder name (e.g., splitting Z = + 100 mm to get 100).
-
+Feature Engineering: You create a new column Z by extracting the height value from the folder name
+(e.g., splitting Z = + 100 mm to get 100).
 Merging: You concatenate all data into df_visualize_3d and filter to keep only ['x', 'y', 'Z', 'Temperature'].
 
+
 Step 5: Visualization & Comparison (Cell 9)
-Note: While the loading code for this specific plot isn't fully visible in the previous cells, the plotting logic indicates the following:
-
+Note: While the loading code for this specific plot isn't fully visible in the previous cells,
+the plotting logic indicates the following:
 Data Selection: You filter data for two specific depths: Z = 100 mm and Z = 375 mm.
-
-Comparison: You utilize a plotting function (likely plot_contours defined elsewhere or in this cell) to generate side-by-side Contour Plots.
-
+Comparison: You utilize a plotting function (likely plot_contours defined elsewhere or in this cell)
+to generate side-by-side Contour Plots.
 Left Column: Plots the Actual temperature (Temperature_Interpolated).
-
 Right Column: Plots the Predicted temperature (Temperature_3D_Predicted).
 
-Goal: This visualizes how well your model's predictions match the ground truth (Interpolated/CFD data) at different depths of the fin.
+Goal: This visualizes how well your model's predictions match the ground truth (Interpolated/CFD data)
+at different depths of the fin.
+
 
 Summary of Output
 df_visualize_2d: Contains 347,754 rows of 2D coordinates with their associated temperatures and boundary condition labels.
-
 df_visualize_3d: Contains 28,262 rows of 3D coordinates with their associated temperatures and Z-height labels.
-
 Final Plot: A 2x2 grid of contour maps comparing Actual vs. Predicted temperatures at Z=100mm and Z=375mm.
